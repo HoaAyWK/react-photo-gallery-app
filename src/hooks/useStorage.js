@@ -19,12 +19,11 @@ const useStorage = (file) => {
             setError(err);
         }, async () => {
             const url = await getDownloadURL(uploadTask.snapshot.ref);
-            const createdAd = serverTimestamp();
-            const docRef = await addDoc(collection(fireStore, 'images'), {
+            const createdAt = serverTimestamp();
+            await addDoc(collection(fireStore, 'images'), {
                 url,
-                createdAd
+                createdAt
             });
-            console.log(docRef.id);
             setUrl(url);
         } )
     }, [file]);
