@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion } from 'framer-motion';
 import useStorage from "../hooks/useStorage";
 
 const ProgessBar = ({ file, setFile }) => {
@@ -7,7 +8,10 @@ const ProgessBar = ({ file, setFile }) => {
         if (url) setFile(null);        
     }, [url, setFile]);
 
-    return <div className="progess-bar" style={{width: progess+'%'}}></div>;
+    return <motion.div 
+    initial={{width: 0}}
+    animate={{width: progess + '%'}}
+    className="progess-bar" ></motion.div>;
 };
 
 export default ProgessBar;

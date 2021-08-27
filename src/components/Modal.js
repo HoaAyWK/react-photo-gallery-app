@@ -1,4 +1,4 @@
-
+import { motion } from 'framer-motion';
 
 const Modal = ({ selectedImg, setSelectedImg }) => {
     const clickHandler = (event) => {
@@ -6,9 +6,16 @@ const Modal = ({ selectedImg, setSelectedImg }) => {
             setSelectedImg(null);
         }
     }
-    return <div className='backdrop' onClick={clickHandler}>
-        <img src={selectedImg} alt='enlarge img'></img>
-    </div>
+    return <motion.div 
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    className='backdrop' 
+    onClick={clickHandler}>
+        <motion.img 
+        initial={{y: '-100vh'}}
+        animate={{y: 0}}
+        src={selectedImg} alt='enlarge img'/>
+    </motion.div>
 };
 
 export default Modal;
