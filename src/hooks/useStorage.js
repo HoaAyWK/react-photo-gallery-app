@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../firebase/config';
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { storage, fireStore } from '../firebase/config';
 
 
 const useStorage = (file) => {
@@ -12,12 +13,18 @@ const useStorage = (file) => {
         const storageRef = ref(storage, file.name);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on('state_changed', (snapshot) => {
-            const presentage = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+            const persentage = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
             setProgess(persentage);
         }, (err) => {
             setError(err);
         }, async () => {
             const url = await getDownloadURL(uploadTask.snapshot.ref);
+            const createdAd = serverTimestamp();
+            const docRef = await addDoc(collection(fireStore, 'images'), {
+                url,
+                createdAd
+            });
+            console.log(docRef.id);
             setUrl(url);
         } )
     }, [file]);

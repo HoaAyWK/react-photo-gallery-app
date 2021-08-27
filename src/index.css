@@ -57,3 +57,9 @@ label input {
   height: 0;
   opacity: 0;
 }
+
+.progess-bar {
+  height: 5px;
+  background-color: var(--primary);
+  margin-top: 20px;
+}
